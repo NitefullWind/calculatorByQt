@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/images">
+        <file alias="up">ico_up.png</file>
+        <file alias="down">ico_down.png</file>
+    </qresource>
+</RCC>

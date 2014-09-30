@@ -4,6 +4,9 @@
 #include <QString>
 #include <string>
 #include <QLabel>
+#include <QDebug>
+#include <QAction>
+
 #include "stack.h"
 using namespace std;
 
@@ -23,7 +26,7 @@ private:
     Ui::MainWindow *ui;
 
     double n, num1, num2;
-    int index;
+    int index, historicalCount, historicalList;
     char topStr;
     int great(char c);
     double caculate(char c, double n1, double n2);
@@ -32,9 +35,11 @@ private:
 
     void calculator();
 
-    QString inputStr;
+    QString inputStr,historicalResult[100];
     string formula;
     QLabel screen;
+
+    QAction *upAction, *downAction;
 
 private slots:
     void inputStr0(){
@@ -108,6 +113,8 @@ private slots:
     void equal(){
         calculator();
         showResult();
+        historicalList = historicalCount;
+        historicalResult[historicalCount++] = inputStr;
         inputStr.clear();
     }
     void showResult(){
@@ -120,6 +127,16 @@ private slots:
     void del(){
         inputStr.chop(1);   //或者inputStr = inputStr.left(string.length() - 1);
         showResult();
+    }
+    void historyUp(){
+        (historicalList>0) ? inputStr = historicalResult[historicalList--]: inputStr = "上面没有喽!";
+        showResult();
+        inputStr.clear();
+    }
+    void historyDown(){
+        (historicalList<historicalCount) ? inputStr = historicalResult[historicalList++]: inputStr = "下面还没有呢!";
+        showResult();
+        inputStr.clear();
     }
 };
 

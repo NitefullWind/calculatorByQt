@@ -9,13 +9,31 @@
 #include <QKeyEvent>
 #include <QEvent>
 #include <QPalette>
+#include <QToolBar>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    historicalList = historicalCount =0;
+
     ui->setupUi(this);
     setWindowTitle(tr("计算器"));
+    resize(300,250);
+
+    upAction = new QAction(QIcon(":images/up"),tr("查看上一条"),this);
+    QToolBar *upButton = new QToolBar(tr("上一条"));
+    connect(upAction,SIGNAL(triggered()),this,SLOT(historyUp()));
+    upButton->addAction(upAction);
+    downAction = new QAction(QIcon("images/down"),tr("查看下一条"),this);
+    QToolBar *downButton = new QToolBar(tr("下一条"));
+    connect(downAction,SIGNAL(triggered()),this,SLOT(historyDown()));
+    downButton->addAction(downAction);
+
+    QGridLayout *upGridLayout= new QGridLayout;
+    upGridLayout->addWidget(&screen,0,0,2,10);
+    upGridLayout->addWidget(upButton,0,10,1,1);
+    upGridLayout->addWidget(downButton,1,10,1,1);
 
     QPushButton *button0 = new QPushButton(tr("0"));
     QPushButton *button1 = new QPushButton(tr("1"));
@@ -88,7 +106,8 @@ MainWindow::MainWindow(QWidget *parent) :
     pal.setColor(QPalette::ButtonText,QColor(0,0,255));
     buttonEqual->setPalette(pal);
     screen.setStyleSheet("background-color:rgb(100,180,255)");  //设置样式表可改变部件颜色，背景色
-    mainLayout->addWidget(&screen);
+
+    mainLayout->addLayout(upGridLayout);
     mainLayout->addLayout(keyLayout);
 
     QWidget *mainWidget = new QWidget;
@@ -218,10 +237,13 @@ void MainWindow::calculator()
                 n += (formula[i]-'0');
             }
             //小数部分
-            else if(formula[i]=='.') do{
-                index++;
-                n += (formula[++i]-'0')*pow(0.1,index);
-            }while(formula[i+1]>='0');
+            else if(formula[i]=='.'){
+                index =0;
+                do{
+                    index++;
+                    n += (formula[++i]-'0')*pow(0.1,index);
+                }while(formula[i+1]>='0');
+            }
             //数字入栈
             if(formula[i+1]<'0'&&formula[i+1]!='.'){
                 stackOfNum.push(n);
