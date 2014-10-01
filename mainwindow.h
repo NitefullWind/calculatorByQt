@@ -129,7 +129,7 @@ private slots:
         showResult();
     }
     void historyUp(){
-        (historicalList>0) ? inputStr = historicalResult[historicalList--]: inputStr = "上面没有喽!";
+        (historicalList>0) ? inputStr = historicalResult[--historicalList]: inputStr = "上面没有喽!";
         showResult();
         inputStr.clear();
     }

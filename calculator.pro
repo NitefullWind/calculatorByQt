@@ -23,3 +23,8 @@ FORMS    += mainwindow.ui
 
 RESOURCES += \
     res.qrc
+
+RC_FILE += myico.rc
+
+OTHER_FILES += \
+    myico.rc

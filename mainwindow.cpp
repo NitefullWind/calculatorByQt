@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QToolBar *upButton = new QToolBar(tr("上一条"));
     connect(upAction,SIGNAL(triggered()),this,SLOT(historyUp()));
     upButton->addAction(upAction);
-    downAction = new QAction(QIcon("images/down"),tr("查看下一条"),this);
+    downAction = new QAction(QIcon(":images/down"),tr("查看下一条"),this);
     QToolBar *downButton = new QToolBar(tr("下一条"));
     connect(downAction,SIGNAL(triggered()),this,SLOT(historyDown()));
     downButton->addAction(downAction);
