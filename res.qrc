@@ -2,5 +2,6 @@
     <qresource prefix="/images">
         <file alias="up">ico_up.png</file>
         <file alias="down">ico_down.png</file>
+        <file alias="author">author.jpg</file>
     </qresource>
 </RCC>

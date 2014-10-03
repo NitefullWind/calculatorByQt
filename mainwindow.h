@@ -6,7 +6,7 @@
 #include <QLabel>
 #include <QDebug>
 #include <QAction>
-
+#include <QMessageBox>
 #include "stack.h"
 using namespace std;
 
@@ -138,6 +138,7 @@ private slots:
         showResult();
         inputStr.clear();
     }
+    void aboutMessages();
 };
 
 #endif // MAINWINDOW_H

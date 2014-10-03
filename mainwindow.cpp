@@ -10,6 +10,7 @@
 #include <QEvent>
 #include <QPalette>
 #include <QToolBar>
+#include <QMenu>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -20,6 +21,14 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     setWindowTitle(tr("计算器"));
     resize(300,250);
+
+    QMenu *helpMenu = menuBar()->addMenu(tr("帮助(&H)"));
+    QAction *aboutAction = new QAction(tr("关于…"),this);
+    connect(aboutAction,&QAction::triggered,this,&MainWindow::aboutMessages);
+    helpMenu->addAction(aboutAction);
+    QAction *quitAction = new QAction(tr("退出"),this);
+    connect(quitAction,&QAction::triggered,this,&QApplication::quit);
+    helpMenu->addAction(quitAction);
 
     upAction = new QAction(QIcon(":images/up"),tr("查看上一条"),this);
     QToolBar *upButton = new QToolBar(tr("上一条"));
@@ -254,6 +263,13 @@ void MainWindow::calculator()
     //得到并输出结果
     stackOfNum.getTop(n);
     inputStr += " = " + QString::number(n);
+}
+
+void MainWindow::aboutMessages(){
+    QMessageBox about(QMessageBox::NoIcon,tr("关于 计算器"),"");
+    about.setIconPixmap(QPixmap(":images/author"));
+    about.setText(tr("<h3>软件名：计算器<br>作者：默雨暮风<br>源码：<font color='blue'>https://github.com/NitefullWind/calculatorByQt.git</font></h3>"));
+    about.exec();
 }
 
 MainWindow::~MainWindow()
