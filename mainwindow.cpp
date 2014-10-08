@@ -23,6 +23,9 @@ MainWindow::MainWindow(QWidget *parent) :
     resize(300,250);
 
     QMenu *helpMenu = menuBar()->addMenu(tr("帮助(&H)"));
+    QAction *operation = new QAction(tr("使用说明"),this);
+    connect(operation,&QAction::triggered,this,&MainWindow::operationMessages);
+    helpMenu->addAction(operation);
     QAction *aboutAction = new QAction(tr("关于…"),this);
     connect(aboutAction,&QAction::triggered,this,&MainWindow::aboutMessages);
     helpMenu->addAction(aboutAction);
@@ -270,6 +273,12 @@ void MainWindow::aboutMessages(){
     about.setIconPixmap(QPixmap(":images/author"));
     about.setText(tr("<h3>软件名：计算器<br>作者：默雨暮风<br>源码：<font color='blue'>https://github.com/NitefullWind/calculatorByQt.git</font></h3>"));
     about.exec();
+}
+
+void MainWindow::operationMessages(){
+    QMessageBox operation(QMessageBox::NoIcon,tr("使用说明"),"");
+    operation.setText(tr("此计算器支持键盘输入(除了两个括号 =。= )，需注意：<br>Enter键为求值<br>Backspace键为删除<br>Delte键为清除<br>"));
+    operation.exec();
 }
 
 MainWindow::~MainWindow()

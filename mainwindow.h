@@ -139,6 +139,7 @@ private slots:
         inputStr.clear();
     }
     void aboutMessages();
+    void operationMessages();
 };
 
 #endif // MAINWINDOW_H
