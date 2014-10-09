@@ -222,12 +222,10 @@ void MainWindow::calculator()
     for(int i=1;formula[i]!='\0';i++){
         //运算符操作
         if(formula[i]<'0'&&formula[i]!='.'){
-            if(formula[i]=='('){
-                stackOfChar.push(formula[i]);
-                continue;
-            }
             stackOfChar.getTop(topStr);
-            if(great(formula[i])>great(topStr)) //当前元素优先级高则入栈
+            if(formula[i]=='(')
+                stackOfChar.push(formula[i]);
+            else if(great(formula[i])>great(topStr)) //当前元素优先级高则入栈
                 stackOfChar.push(formula[i]);
             else if(topStr=='#'&&formula[i]=='#') break;
             else if(topStr=='('&&formula[i]==')') stackOfChar.pop();
@@ -239,6 +237,13 @@ void MainWindow::calculator()
                 stackOfNum.push(caculate(topStr,num1,num2));
                 stackOfChar.pop();
                 i--;
+                continue;
+            }
+            //处理负号
+            if(formula[i+1]=='-'){
+                stackOfNum.push(-1.0);
+                stackOfChar.push('*');
+                i++;
             }
         }
         //运算数操作
